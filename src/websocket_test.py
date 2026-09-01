@@ -140,12 +140,41 @@ async def test_bitget():
         return name, 0, 0, f"{type(e).__name__}: {e}"
 
 
+async def test_kraken():
+    name = "kraken"
+    uri = "wss://ws.kraken.com/v2"
+    trade_req = {
+        "method": "subscribe",
+        "params": {"channel": "trade", "symbol": ["BTC/USD"], "snapshot": True},
+    }
+    book_req = {
+        "method": "subscribe",
+        "params": {"channel": "book", "symbol": ["BTC/USD"], "depth": 10, "snapshot": True},
+    }
+    try:
+        async with websockets.connect(uri, open_timeout=5, ping_interval=20) as ws:
+            await ws.send(json.dumps(trade_req))
+            await ws.send(json.dumps(book_req))
+            trade = orderbook = 0
+            deadline = time.time() + TIMEOUT_SEC
+            while time.time() < deadline and (trade == 0 or orderbook == 0):
+                msg = await recv_json(ws, max(1, deadline - time.time()))
+                channel = msg.get("channel", "")
+                if channel == "trade" and msg.get("data"):
+                    trade += 1
+                elif channel == "book" and msg.get("data"):
+                    orderbook += 1
+            return name, trade, orderbook, None
+    except Exception as e:
+        return name, 0, 0, f"{type(e).__name__}: {e}"
+
+
 async def main():
-    print("MAGI WebSocket Public Stream Test v0.3")
+    print("MAGI WebSocket Public Stream Test v0.4")
     print(f"UTC_MS={now_ms()} | PUBLIC DATA ONLY | NO API KEYS | NO ORDERS")
     print("=" * 92)
 
-    tests = [test_upbit, test_bithumb, test_binance, test_bybit, test_bitget]
+    tests = [test_upbit, test_bithumb, test_binance, test_bybit, test_bitget, test_kraken]
     results = []
     for test in tests:
         results.append(await test())
