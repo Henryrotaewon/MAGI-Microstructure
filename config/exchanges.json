@@ -1,0 +1,14 @@
+{
+  "exchanges": [
+    {"id": "upbit", "group": "KR-CEX", "preferred_symbols": ["BTC/KRW", "ETH/KRW", "XRP/KRW"]},
+    {"id": "bithumb", "group": "KR-CEX", "preferred_symbols": ["BTC/KRW", "ETH/KRW", "XRP/KRW"]},
+    {"id": "coinone", "group": "KR-CEX", "preferred_symbols": ["BTC/KRW", "ETH/KRW", "XRP/KRW"]},
+    {"id": "binance", "group": "GL-CEX", "preferred_symbols": ["BTC/USDT", "ETH/USDT", "XRP/USDT"]},
+    {"id": "bybit", "group": "GL-CEX", "preferred_symbols": ["BTC/USDT", "ETH/USDT", "XRP/USDT"]},
+    {"id": "bitget", "group": "GL-CEX", "preferred_symbols": ["BTC/USDT", "ETH/USDT", "XRP/USDT"]},
+    {"id": "hyperliquid", "group": "DEX", "preferred_symbols": ["BTC/USDC", "ETH/USDC", "BTC/USDT", "ETH/USDT"]},
+    {"id": "dydx", "group": "DEX", "preferred_symbols": ["BTC/USDC", "ETH/USDC", "BTC/USD", "ETH/USD"]},
+    {"id": "apex", "group": "DEX", "preferred_symbols": ["BTC/USDT", "ETH/USDT", "BTC/USDC", "ETH/USDC"]},
+    {"id": "aster", "group": "DEX", "preferred_symbols": ["BTC/USDT", "ETH/USDT", "BTC/USDC", "ETH/USDC"]}
+  ]
+}
