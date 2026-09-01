@@ -1,0 +1,48 @@
+name: MAGI Liquidity Fingerprint Capture
+
+on:
+  workflow_dispatch:
+    inputs:
+      duration_sec:
+        description: Capture duration in seconds (5-300)
+        required: false
+        default: "60"
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Capture public microstructure data
+        env:
+          MAGI_CAPTURE_SEC: ${{ inputs.duration_sec }}
+        run: python src/liquidity_collector.py
+
+      - name: Show capture summary
+        if: always()
+        run: |
+          find data/raw -name summary.json -print -exec cat {} \; || true
+
+      - name: Upload raw capture artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: magi-liquidity-raw-${{ github.run_id }}
+          path: data/raw/
+          if-no-files-found: warn
+          retention-days: 14
