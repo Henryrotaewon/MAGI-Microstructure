@@ -1,0 +1,45 @@
+name: MAGI Flow Wave Live Observation
+
+on:
+  push:
+    paths:
+      - 'src/flow_wave/live_observer.py'
+      - '.github/workflows/flow-wave-live-observation.yml'
+  workflow_dispatch:
+    inputs:
+      duration:
+        description: 'Observation seconds (30-300)'
+        required: false
+        default: '90'
+
+permissions:
+  contents: read
+
+env:
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Observe seven-venue live Flow Waves
+        shell: bash
+        run: |
+          DURATION="${{ github.event.inputs.duration }}"
+          if [ -z "$DURATION" ]; then DURATION=90; fi
+          python -m src.flow_wave.live_observer --duration "$DURATION" --out data/flow_wave/live_observation.json
+      - name: Upload observation result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flow-wave-live-${{ github.run_id }}
+          path: data/flow_wave/live_observation.json
+          if-no-files-found: warn
+          retention-days: 7
