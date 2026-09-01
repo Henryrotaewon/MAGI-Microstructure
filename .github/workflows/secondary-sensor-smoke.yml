@@ -1,0 +1,24 @@
+name: MAGI Secondary Sensor Smoke
+
+on:
+  push:
+    paths:
+      - 'src/secondary_sensor_smoke.py'
+      - '.github/workflows/secondary-sensor-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'websockets>=14.0'
+      - name: Check Kraken Aster Apex public trade and book streams
+        run: python src/secondary_sensor_smoke.py
