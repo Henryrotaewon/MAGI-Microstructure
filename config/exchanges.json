@@ -6,6 +6,7 @@
     {"id": "binance", "group": "GL-CEX", "preferred_symbols": ["BTC/USDT", "ETH/USDT", "XRP/USDT"]},
     {"id": "bybit", "group": "GL-CEX", "preferred_symbols": ["BTC/USDT", "ETH/USDT", "XRP/USDT"]},
     {"id": "bitget", "group": "GL-CEX", "preferred_symbols": ["BTC/USDT", "ETH/USDT", "XRP/USDT"]},
+    {"id": "kraken", "group": "GL-CEX", "preferred_symbols": ["BTC/USD", "ETH/USD", "XRP/USD"]},
     {"id": "hyperliquid", "group": "DEX", "preferred_symbols": ["BTC/USDC", "ETH/USDC", "BTC/USDT", "ETH/USDT"]},
     {"id": "dydx", "group": "DEX", "preferred_symbols": ["BTC/USDC", "ETH/USDC", "BTC/USD", "ETH/USD"]},
     {"id": "apex", "group": "DEX", "preferred_symbols": ["BTC/USDT", "ETH/USDT", "BTC/USDC", "ETH/USDC"]},
