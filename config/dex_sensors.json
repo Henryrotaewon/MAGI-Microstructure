@@ -1,0 +1,37 @@
+{
+  "purpose": "Secondary public WebSocket sensors for quote-shadow, dependency-break and propagation research. Research/paper only.",
+  "sensors": [
+    {
+      "exchange": "aster",
+      "class": "DEX",
+      "role": "secondary_sensor",
+      "enabled": false,
+      "market": "futures",
+      "symbol_native": "btcusdt",
+      "symbol_canonical": "BTC/USDT",
+      "websocket_base": "wss://fstream.asterdex.com",
+      "streams": ["btcusdt@aggTrade", "btcusdt@depth5@100ms", "btcusdt@bookTicker"],
+      "expected_features": ["trade", "top_book", "depth", "quote_shadow", "dependency_break"],
+      "notes": "Official docs expose aggregate trades, real-time bookTicker, and partial/diff depth. Keep disabled until smoke-tested from the target runner."
+    },
+    {
+      "exchange": "apex",
+      "class": "DEX",
+      "role": "secondary_sensor",
+      "enabled": false,
+      "market": "derivatives",
+      "symbol_native": "BTC-USDT",
+      "symbol_canonical": "BTC/USDT",
+      "websocket_base": "wss://quote.omni.apex.exchange/realtime_public",
+      "streams": ["public_trade", "orderbook"],
+      "expected_features": ["trade", "orderbook", "quote_shadow", "dependency_break"],
+      "notes": "Official docs recommend public WebSocket for market data and order-book depth. Exact subscription payload should be verified in an isolated smoke adapter before enabling collection."
+    }
+  ],
+  "research_rules": [
+    "Do not infer manipulation or actor identity from public market data.",
+    "A secondary sensor is promoted only after timestamp, book-state and health validation.",
+    "Compare quote changes and returns, not raw KRW-vs-USDT price levels.",
+    "All alpha evaluation remains paper-only until net executable alpha is validated out of sample."
+  ]
+}
