@@ -1,0 +1,22 @@
+{
+  "mode": "paper_research_only",
+  "horizons_ms": [100, 250, 500, 1000, 2000, 5000, 10000, 30000, 60000, 300000],
+  "direction_thresholds_bps": {
+    "up": 3.0,
+    "down": -3.0
+  },
+  "execution": {
+    "entry": "signal_time_best_ask",
+    "exit": "future_best_bid",
+    "fee_bps_per_side": 0.0,
+    "estimated_slippage_bps_round_trip": 0.0,
+    "note": "Replace zeros with venue/tier-specific research assumptions before any PnL interpretation."
+  },
+  "rules": {
+    "feature_time": "freeze_at_signal_ts",
+    "label_time": "future_only",
+    "invalid_book": "skip",
+    "stale_or_degraded_data": "exclude_or_downweight",
+    "live_execution": false
+  }
+}
